@@ -1,5 +1,6 @@
 var request = require('request-promise');
 var dataURLS = JSON.parse(process.env.DATA_URLS);
+var reporter = require('./reporter')
 
 module.exports = function(req, res, next) {
 	var params = req.query;
@@ -15,6 +16,7 @@ module.exports = function(req, res, next) {
 			return result;
 		})
 		.catch(function errorResponse(err) {
+			reporter(err);
 			res.status(err.statusCode).json({
 				error: err.message
 			});
