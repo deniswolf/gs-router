@@ -6,14 +6,15 @@ module.exports = function(req, res, next) {
 	return request({
 			uri: dataURL,
 			method: 'GET',
+			json: true,
 			qs: params
 		})
 		.then(function validResponse(result) {
-			res.json(JSON.parse(result));
+			res.json(result);
 			return result;
 		})
 		.catch(function errorResponse(err) {
-			res.status(500).json({
+			res.status(err.statusCode).json({
 				error: err.message
 			});
 			return err;
